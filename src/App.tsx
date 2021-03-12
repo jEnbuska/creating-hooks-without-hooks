@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {ComponentType,} from 'react';
+import {useReducer, useState} from './hooks'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App: ComponentType = () => {
+    const [count1, setState] = useState(() => 0);
+    const [count2, dispatch] = useReducer((prevState: number, action: 'inc' | 'dec') => {
+        switch(action) {
+            case 'inc': return prevState + 1;
+            default: return prevState - 1;
+        }
+    }, 0)
+
+    return (
+        <div>
+            <button onClick={() => setState(count1 - 1)}>dec</button>
+            <p>{count1}</p>
+            <button onClick={() => setState(count1 + 1)}>inc</button>
+            <hr />
+            <button onClick={() => dispatch('dec')}>dec</button>
+            <p>{count2}</p>
+            <button onClick={() => dispatch('inc')}>inc</button>
+        </div>
+    );
+};
 
 export default App;
